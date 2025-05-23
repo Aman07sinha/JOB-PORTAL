@@ -6,13 +6,14 @@ import {
     persistStore,
     persistReducer,
     FLUSH,
-    REHYDRATE,
+    REHYDRATE ,
     PAUSE,
     PERSIST,
     PURGE,
     REGISTER,
 } from 'redux-persist';
 import storage from "redux-persist/Lib/storage"
+import { getDefaultConfig } from "tailwind-merge";
 // import { Key } from "lucide-react";
 // import { version } from "vite";
 
@@ -30,9 +31,12 @@ const rootreducer = combineReducers({
 const persistedReducer = persistReducer(persistConfig, rootreducer)
 
 const store = configureStore({
-    reducer:{
-        auth: authSlice,
-        job: jobSlice
-    }
+    reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) => 
+        getDefaultMiddleware({
+            serializableCheck: {
+                ignoreActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+            },
+        }),
 });
 export default store;

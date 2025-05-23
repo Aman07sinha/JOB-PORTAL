@@ -31,6 +31,9 @@ const AppWrapper = () => {
         <Route path="/browse" element={<Browse />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/description/:id" element={<JobDescription />} />
+
+         {/* admin ke liye yaha se start hoga */}
+         <Route path="/admin/companies" element={<Companies/>} />
       </Routes>
     </>
   )
