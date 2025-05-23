@@ -8,6 +8,9 @@ import Jobs from './components/ui/Jobs'
 import Browse from './components/ui/Browse'
 import Profile from './components/ui/Profile'
 import JobDescription from './components/ui/JobDescription'
+import Companies from './components/ui/admin/Companies'
+import CompanyCreate from './components/ui/admin/CompanyCreate'
+import CompanySetup from './components/ui/admin/CompanySetup'
 
 
 const AppWrapper = () => {
@@ -32,8 +35,11 @@ const AppWrapper = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/description/:id" element={<JobDescription />} />
 
-         {/* admin ke liye yaha se start hoga */}
-         <Route path="/admin/companies" element={<Companies/>} />
+        {/* admin ke liye yaha se start hoga */}
+        <Route path="/admin/companies" element={<Companies />} />
+        <Route path="/admin/companies/create" element={<CompanyCreate/>} />
+        <Route path="/admin/companies/:id" element={<CompanySetup/>} />
+
       </Routes>
     </>
   )
