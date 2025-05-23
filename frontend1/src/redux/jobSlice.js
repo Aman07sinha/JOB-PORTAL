@@ -20,3 +20,5 @@ const jobSlice = createSlice({
 });
 export const {setAllJobs, setSingleJob} = jobSlice.actions;
 export default jobSlice.reducer;
+
+

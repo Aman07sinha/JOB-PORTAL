@@ -71,16 +71,17 @@ const Job = ({ job }) => { // ✅ FIX: Destructure job from props
     const navigate = useNavigate();
 
     const daysAgoFunction = (mongodbTime) => {
-        const createAt = new Date(mongodbTime);
+        const createdAt = new Date(mongodbTime);
         const currentTime = new Date();
-        const timeDifference = currenttime
+        const timeDifference = currentTime - createdAt;
+        return Math.floor(timeDifference/ (1000*24*60*60));
     }
 
     return (
         <div className="p-5 rounded-md shadow-xl bg-white border border-gray-100">
             {/* Top right time and bookmark */}
             <div className="flex items-center justify-between">
-                <p className="text-sm text-gray-500">2 days ago</p>
+                <p className="text-sm text-gray-500">{daysAgoFunction(job?.createdAt) == 0 ? "Today" : `${daysAgoFunction(job?.createdAt)} days ago` }</p>
                 <Button variant="outline" className="rounded-full" size="icon">
                     <Bookmark />
                 </Button>
