@@ -15,8 +15,12 @@ const CompanyCreate = () => {
     const dispatch = useDispatch();
 
     const registerNewCompany = async () => {
+        if (!companyName.trim()) {
+            toast.error("Company name is required");
+            return;
+        }
         try {
-            const res = await axios.post(`${COMPANY_API_END_POINT}/register`, { companyName }, {
+            const res = await axios.post(`${COMPANY_API_END_POINT}/register`, { companyName: companyName.trim() }, {
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -29,7 +33,9 @@ const CompanyCreate = () => {
                 navigate(`/admin/companies/${companyId}`);
             }
         } catch (error) {
-            console.log(error);
+            const errorMessage = error?.response?.data?.message || "Something went wrong";
+            toast.error(errorMessage);
+            console.error("Axios error:", error);
         }
     }
     return (
@@ -61,10 +67,18 @@ const CompanyCreate = () => {
                         Cancel
                     </Button>
 
-                    {/* Continue Button - Darker Gray Variant */}
-                    <Button className="px-5 py-2 bg-gray-800 text-white text-sm font-medium rounded-md hover:bg-gray-900 transition-all duration-200" onClick={registerNewCompany}>
+                    <Button
+                        disabled={!companyName.trim()}
+                        onClick={registerNewCompany}
+                        className={`px-5 py-2 text-sm font-medium rounded-md transition-all duration-200
+                             ${!companyName.trim()
+                                ? "bg-gray-800 text-white cursor-not-allowed"
+                                : "bg-indigo-600 text-white hover:bg-indigo-700"
+                            }`}
+                    >
                         Continue
                     </Button>
+
                 </div>
 
             </div>
