@@ -32,12 +32,6 @@ const jobSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-     // position: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'Position',
-    //     required:true
-    // },
-
     position: {
         type: String,
         required: true
