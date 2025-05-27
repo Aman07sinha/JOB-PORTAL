@@ -9,9 +9,12 @@ import { toast } from 'react-toastify'
 import { COMPANY_API_END_POINT } from '@/utils/constant'
 import { Loader2 } from 'lucide-react';
 import { useSelector } from 'react-redux'
+import useGetCompanyById from '@/hooks/useGetCompanyById'
 
 
 const CompanySetup = () => {
+    const params = useParams();
+    useGetCompanyById(params.id);
     const [input, setInput] = useState({
         name: "",
         description: "",
@@ -20,9 +23,8 @@ const CompanySetup = () => {
         industry: "",
         file: null
     });
-    const {singleCompany} = useSelector(store=>store.company);
+    const { singleCompany } = useSelector(store => store.company);
     const [loading, setLoading] = useState(false);
-    const params = useParams();
     const navigate = useNavigate();
 
     const changeEventHandler = (e) => {
@@ -41,6 +43,8 @@ const CompanySetup = () => {
         formData.append("description", input.description);
         formData.append("website", input.website);
         formData.append("location", input.location);
+        formData.append("industry", input.industry);
+
         if (input.file) {
             formData.append("file", input.file);
         }
@@ -74,7 +78,7 @@ const CompanySetup = () => {
             description: singleCompany.description || "",
             website: singleCompany.website || "",
             location: singleCompany.location || "",
-            industry: singleCompany.industry || "", 
+            industry: singleCompany.industry || "",
             file: singleCompany.file || null
         })
     }, [singleCompany]);
@@ -169,12 +173,21 @@ const CompanySetup = () => {
                             Cancel
                         </Button>
                         {
-                            loading ? <Button className='w-full my-4'> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button> : <button
+                            <Button
                                 type="submit"
-                                className="px-6 py-2 text-sm rounded-lg bg-blue-600 text-blue-20 hover:bg-blue-100 transition-all"
+                                disabled={loading}
+                                className="px-6 py-2 text-sm rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all flex items-center justify-center"
                             >
-                                Submit
-                            </button>
+                                {loading ? (
+                                    <>
+                                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                        Please wait
+                                    </>
+                                ) : (
+                                    'Submit'
+                                )}
+                            </Button>
+
                         }
                     </div>
                 </form>
